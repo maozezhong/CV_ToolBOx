@@ -59,7 +59,7 @@ if __name__ == '__main__':
     source_bad_pic_root_path = './data_split/bad'
     source_xml_root_path = './tianchi_detect/data_voc/VOC2007/Annotations'
 
-    target_pic_root_path = './data_croped'  #只包括有瑕疵的图片
+    target_pic_root_path = './data_croped'
     if os.path.exists(target_pic_root_path):
         shutil.rmtree(target_pic_root_path)
     os.mkdir(target_pic_root_path)
@@ -75,17 +75,10 @@ if __name__ == '__main__':
             img = cv2.imread(bad_pic_path)
             bboxes = parse_xml(xml_path)
 
-            # #原图可视化一下
-            # show_pic(img,bboxes)
-
             croped_imgs = crop_bd(img, bboxes)
             for croped_img in croped_imgs:
                 cnt += 1
                 target_pic_path = os.path.join(target_pic_root_path, file[:-4]+'_croped'+str(cnt)+'.jpg')
-                # #reize一下
-                # croped_img = cv2.resize(croped_img, (img.shape[1], img.shape[0]))
-                # #可视化一下截取的图
-                # show_pic(croped_img,[[0,0,croped_img.shape[1],img.shape[0]]])
-                #写入
+
                 cv2.imwrite(target_pic_path, croped_img)
                 
