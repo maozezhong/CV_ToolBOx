@@ -422,6 +422,8 @@ if __name__ == '__main__':
 	parser.add_argument('--aug_num', type=int, default=1)
 	parser.add_argument('--img_source_path', type=str, default='./data_split')
 	parser.add_argument('--ano_source_path', type=str, default='./data_voc/VOC2007/Annotations',
+	parser.add_argument('--img_dest_path', type=str, default='./data_split')
+	parser.add_argument('--ano_dest_path', type=str, default='./data_voc/VOC2007/Annotations',
 
 	args = parser.parse_args()
 
@@ -430,6 +432,8 @@ if __name__ == '__main__':
 
 	source_pic_root_path = args.img_source_path
 	source_xml_root_path = args.ano_source_path
+    img_root_path = args.img_dest_path
+    aug_root_path = args.ano_dest_path
 
 	for parent, _, files in os.walk(source_pic_root_path):
 		for file in files:				

@@ -1,4 +1,5 @@
 import cv2
+import os
 
 def show_pic(img, bboxes=None):
     cv2.imwrite('./1.jpg', img)
@@ -19,10 +20,9 @@ def show_pic(img, bboxes=None):
 
 if __name__ == '__main__':
     from xml_helper import *
-    need_aug_num = 1
 
-    source_pic_root_path = '/home/hdd/Git/darknet/backup/bullet/new_aug/aug_data'
-    source_xml_root_path = '/home/hdd/Git/darknet/backup/bullet/new_aug/aug_data_ano'
+    source_pic_root_path = '/home/hdd/Git/darknet/backup/bullet/new_aug/images'
+    source_xml_root_path = '/home/hdd/Git/darknet/backup/bullet/new_aug/ano'
 
     for parent, _, files in os.walk(source_pic_root_path):
         for file in files:
