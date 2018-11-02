@@ -346,13 +346,13 @@ class DataAugmentForObjectDetection():
 			horizon = False
 		h,w,_ = img.shape
 		if horizon: #水平翻转
-			flip_img =  cv2.flip(flip_img, -1)
+			flip_img =  cv2.flip(flip_img, 1)
 		else:
 			flip_img = cv2.flip(flip_img, 0)
 
 		# ---------------------- 调整boundingbox ----------------------
 		flip_bboxes = list()
-		for box in bboxes:
+		for bbox in bboxes:
 			x_min = box[0]
 			y_min = box[1]
 			x_max = box[2]
