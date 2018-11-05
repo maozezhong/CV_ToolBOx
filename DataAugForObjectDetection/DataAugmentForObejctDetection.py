@@ -353,10 +353,10 @@ class DataAugmentForObjectDetection():
 		# ---------------------- 调整boundingbox ----------------------
 		flip_bboxes = list()
 		for bbox in bboxes:
-			x_min = box[0]
-			y_min = box[1]
-			x_max = box[2]
-			y_max = box[3]
+			x_min = bbox[0]
+			y_min = bbox[1]
+			x_max = bbox[2]
+			y_max = bbox[3]
 			if horizon:
 				flip_bboxes.append([w-x_max, y_min, w-x_min, y_max, bbox[-1]])
 			else:
@@ -396,9 +396,9 @@ class DataAugmentForObjectDetection():
 				print('亮度')
 				img = self._changeLight(img)
 
-			if random.random() < self.add_noise_rate:    #加噪声
-				print('加噪声')
-				img = self._addNoise(img)
+			#if random.random() < self.add_noise_rate:    #加噪声
+			#	print('加噪声')
+			#	img = self._addNoise(img)
 
 			if random.random() < self.cutout_rate:  #cutout
 				print('cutout')
@@ -407,7 +407,7 @@ class DataAugmentForObjectDetection():
 			if random.random() < self.flip_rate:    #翻转
 				print('翻转')
 				img, bboxes = self._filp_pic_bboxes(img, bboxes)
-				
+
 			change_num += 1
 			print('\n')
 
@@ -420,10 +420,11 @@ if __name__ == '__main__':
 
 	parser = argparse.ArgumentParser(description='DataAug')
 	parser.add_argument('--aug_num', type=int, default=1)
-	parser.add_argument('--img_source_path', type=str, default='./data_split')
-	parser.add_argument('--ano_source_path', type=str, default='./data_voc/VOC2007/Annotations',
-	parser.add_argument('--img_dest_path', type=str, default='./data_split')
-	parser.add_argument('--ano_dest_path', type=str, default='./data_voc/VOC2007/Annotations',
+	parser.add_argument('--img_source_path', type=str, default='/home/hdd/Git/darknet/backup/bullet/new_aug/images')
+	parser.add_argument('--ano_source_path', type=str, default='/home/hdd/Git/darknet/backup/bullet/new_aug/ano')
+	parser.add_argument('--img_dest_path', type=str, default='/home/hdd/Git/darknet/backup/bullet/new_aug/aug_data')
+	parser.add_argument('--ano_dest_path', type=str, default='/home/hdd/Git/darknet/backup/bullet/new_aug/aug_data_ano')
+	parser.add_argument('--start_name', type=int, default=0)
 
 	args = parser.parse_args()
 
@@ -432,11 +433,13 @@ if __name__ == '__main__':
 
 	source_pic_root_path = args.img_source_path
 	source_xml_root_path = args.ano_source_path
-    img_root_path = args.img_dest_path
-    aug_root_path = args.ano_dest_path
+	img_root_path = args.img_dest_path
+	aug_root_path = args.ano_dest_path
+
+	start_name = args.start_name
 
 	for parent, _, files in os.walk(source_pic_root_path):
-		for file in files:				
+		for file in files:
 			pic_path = os.path.join(parent, file)
 			xml_path = os.path.join(source_xml_root_path, file[:-4]+'.xml')
 			coords = parse_xml(xml_path)        #解析得到box信息，格式为[[x_min,y_min,x_max,y_max,name]]

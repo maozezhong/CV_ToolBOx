@@ -1,4 +1,5 @@
 # -*- coding=utf-8 -*-
+import os
 import xml.etree.ElementTree as ET
 import xml.dom.minidom as DOC
 
@@ -10,7 +11,7 @@ def parse_xml(xml_path):
     输出：
         从xml文件中提取bounding box信息, 格式为[[x_min, y_min, x_max, y_max, name]]
     '''
-    tree = ET.parse(xml_path)		
+    tree = ET.parse(xml_path)
     root = tree.getroot()
     objs = root.findall('object')
     coords = list()
@@ -119,6 +120,6 @@ def generate_xml(img_name,coords,img_size,out_root_path):
         bndbox.appendChild(title)
 
     # 将DOM对象doc写入文件
-    f = open(os.path.jpin(out_root_path, img_name[:-4]+'.xml'),'w')
+    f = open(os.path.join(out_root_path, img_name[:-4]+'.xml'),'w')
     f.write(doc.toprettyxml(indent = ''))
     f.close()
